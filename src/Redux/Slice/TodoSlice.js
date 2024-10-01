@@ -10,10 +10,12 @@ export const todoSlice=createSlice({
         deltodo:(state,action)=>{
             return state.filter((t)=>t.id !== action.payload)
         },
-        // edittodo:(state,action)=>{
-
-        // }
+        edittodo: (state, action) => {
+            const { id, text } = action.payload;
+            const index=state.findIndex((t)=>t.id===id)
+            state[index].text = text;
+        }
     }
 })
-export const {addtodo,deltodo}=todoSlice.actions
+export const {addtodo,deltodo,edittodo}=todoSlice.actions
 export const todoReducer=todoSlice.reducer

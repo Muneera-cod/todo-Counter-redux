@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { IconTrashFilled,IconEdit,IconDeviceFloppy } from '@tabler/icons-react'
+import { IconTrashFilled,IconEdit,IconDeviceFloppy,IconX} from '@tabler/icons-react'
 import { useSelector,useDispatch } from 'react-redux'
-import { addtodo, deltodo, edittodo } from '../../Redux/Slice/TodoSlice'
+import { addtodo, deltodo, edittodo} from '../../Redux/Slice/TodoSlice'
 function Todo() {
   const [newtodo,setNewtodo]=useState('')
   const [editTodo,setEditTodo]=useState('')
   const [editing,setEditing]=useState(false)
   const [currid,setCurrid]=useState('')
+  const[hide,setHide]=useState(true)
   const todos=useSelector((state)=>state.todo)
   const dispatch=useDispatch()
   function todoadd(){
@@ -21,7 +22,7 @@ function Todo() {
     setCurrid(id)
     setEditing(true)
     setEditTodo(text)
-   
+     setHide(true)
    
 
     
@@ -31,27 +32,32 @@ function Todo() {
   setEditing(false)
   setEditTodo('')
   setCurrid('')
+  
 
   }
 console.log(editTodo)
   return (
-    <div className='flex flex-col bg-zinc-100 p-6 basis-1/2 h-700 gap-4'>
-        <div className='flex gap-4 w-full mb-3'>
+    <div className='flex flex-col bg-zinc-100 p-6 sm:basis-full md:basis-9/12 lg:basis-1/2 h-700 gap-4 bg-opacity-50 rounded'>
+        <div className='flex gap-2 w-full mb-3'>
             <input className='rounded w-full p-2' value={newtodo} onChange={(e)=>{setNewtodo(e.target.value)}}></input>
-            <button className='bg-indigo-100 p-2 rounded' onClick={todoadd}>Add</button>
+            <button className='bg-indigo-100 p-2 rounded border-2 border-blue-600 text-blue-800 font-bold hover:bg-blue-800 hover:text-indigo-100' onClick={todoadd}>Add</button>
         </div>
-        {todos.map((t)=>{
+        {todos.length===0?<div className=' flex h-full items-center text-zinc-500 hover:text-zinc-900 justify-center font-bold'>No tasks added 🌤️🧘‍♀️</div>:todos.map((t)=>{
           return(<>
-        <div className='hover:bg-zinc-200 p-4  flex justify-between items-center' key={t.id} value={editTodo}>{editing && t.id===currid?editTodo:t.text}
+        {t.text?<div className='hover:bg-zinc-50  hover:bg-opacity-80  p-4 rounded flex justify-between items-center break-normal' key={t.id} value={editTodo}>{editing && t.id===currid && hide?editTodo:t.text}
           <div className='flex gap-2'>
-            <button className='bg-yellow-50 p-3 border-2 border-yellow-500 rounded' onClick={()=>todoedit(t.id,t.text)}><IconEdit className='text-yellow-500'/></button>
-            <button className='bg-red-300 p-3 border-2 border-red-500 rounded' onClick={()=>tododel(t.id)}><IconTrashFilled className='text-red-500'/></button>
+            <button className='hover:bg-yellow-50 p-3  rounded-full' title='Edit' onClick={()=>todoedit(t.id,t.text)}><IconEdit className='text-yellow-500'/></button>
+            <button className='hover:bg-red-300 p-3 rounded-full' title='Delete' onClick={()=>tododel(t.id)}><IconTrashFilled className='text-red-500'/></button>
           </div>
-        </div>
-        {editing && t.id===currid?
-        <div className='p-4 bg-white flex justify-between items-center' >
+        </div>:null}
+        {editing && t.id===currid && hide?
+        <div className='p-4 bg-white flex justify-between items-center gap-3 rounded' >
           <input className='rounded w-full w-full h-full' value={editTodo} onChange={(e)=>{setEditTodo(e.target.value)}}></input>
-          <button className='bg-green-50 p-3 border-2 border-green-500 rounded' onClick={saveEdit}><IconDeviceFloppy className='text-green-500'/></button>  
+          <div className='flex gap-2'>
+          <button className='hover:bg-green-50 p-3  rounded-full' title='Save' onClick={saveEdit}><IconDeviceFloppy className='text-green-500'/></button>
+          <button className='hover:bg-red-50 p-3  rounded-full' title='Save' onClick={()=>setHide(false)}><IconX className='text-red-500'/></button>    
+          </div>
+        
         </div>:null}</>
       )})}
 

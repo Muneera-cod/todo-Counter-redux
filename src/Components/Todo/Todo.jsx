@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IconTrashFilled,IconEdit,IconMagnet } from '@tabler/icons-react'
+import { IconTrashFilled,IconEdit,IconDeviceFloppy } from '@tabler/icons-react'
 import { useSelector,useDispatch } from 'react-redux'
 import { addtodo, deltodo, edittodo } from '../../Redux/Slice/TodoSlice'
 function Todo() {
@@ -51,7 +51,7 @@ console.log(editTodo)
         {editing && t.id===currid?
         <div className='p-4 bg-white flex justify-between items-center' >
           <input className='rounded w-full w-full h-full' value={editTodo} onChange={(e)=>{setEditTodo(e.target.value)}}></input>
-          <button className='bg-yellow-50 p-3 border-2 border-yellow-500 rounded' onClick={saveEdit}><IconMagnet /></button>  
+          <button className='bg-green-50 p-3 border-2 border-green-500 rounded' onClick={saveEdit}><IconDeviceFloppy className='text-green-500'/></button>  
         </div>:null}</>
       )})}
 

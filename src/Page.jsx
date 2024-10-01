@@ -5,7 +5,7 @@ import Loading from './Components/Loading'
 const Todo =lazy(()=>import ('./Components/Todo/Todo'))
 function Page() {
   return (
-    <div className='flex gap-5 p-12 justify-center w-full min-h-screen bgimage'>
+    <div className='flex gap-5 sm:p-4 md:p-12 justify-center w-full min-h-screen bgimage'>
       <Suspense fallback={<Loading/>}>
       <Todo/>
       </Suspense>

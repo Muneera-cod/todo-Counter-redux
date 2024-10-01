@@ -29,6 +29,8 @@ function Todo() {
   function saveEdit() {
   dispatch(edittodo({id:currid,text:editTodo}))
   setEditing(false)
+  setEditTodo('')
+  setCurrid('')
 
   }
 console.log(editTodo)
@@ -49,7 +51,7 @@ console.log(editTodo)
         {editing && t.id===currid?
         <div className='p-4 bg-white flex justify-between items-center' >
           <input className='rounded w-full w-full h-full' value={editTodo} onChange={(e)=>{setEditTodo(e.target.value)}}></input>
-          <button className='bg-yellow-50 p-3 border-2 border-yellow-500 rounded'><IconMagnet onClick={saveEdit}/></button>  
+          <button className='bg-yellow-50 p-3 border-2 border-yellow-500 rounded' onClick={saveEdit}><IconMagnet /></button>  
         </div>:null}</>
       )})}
 

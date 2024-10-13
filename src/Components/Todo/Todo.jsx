@@ -21,10 +21,13 @@ function Todo() {
   }, [editing, hide])
   
   function todoadd(){
-    if(newtodo){
-    dispatch(addtodo(newtodo))}
-    setNewtodo('')
+    console.log(newtodo)
+    if(newtodo.trim() !== ''){
+    dispatch(addtodo(newtodo))
     toast("New Task added!")
+  }
+    setNewtodo('')
+    
   }
   function tododel(id){
      dispatch(deltodo(id))
